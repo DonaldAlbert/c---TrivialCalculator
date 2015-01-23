@@ -9,7 +9,7 @@ namespace CLICalculator
     class UI
     {
         private bool running;
-        private byte? selectedOperation;
+        private Operations? selectedOperation;
         private Engine calcEng;
         private double operantA, operantB;
 
@@ -40,9 +40,12 @@ namespace CLICalculator
 
         private void interact()
         {
-            this.chooseOperation();
-
             bool validInput = true;
+
+            do
+                validInput = this.chooseOperation();
+            while (!validInput);
+
             do
                 validInput = this.getOperant(out this.operantA, "Input operant A");
             while (!validInput);
@@ -60,16 +63,16 @@ namespace CLICalculator
 
             switch (this.selectedOperation)
             {
-                case 1:
+                case Operations.ADDITION:
                     result = this.calcEng.add(this.operantA, this.operantB);
                     break;
-                case 2:
+                case Operations.SUBTRACTION:
                     result = this.calcEng.subtract(this.operantA, this.operantB);
                     break;
-                case 3:
+                case Operations.MULTIPLICATION:
                     result = this.calcEng.multiply(this.operantA, this.operantB);
                     break;
-                case 4:
+                case Operations.DIVISION:
                     if (this.operantB == 0) {
                         System.Console.WriteLine("Division by zero not allowed.");
                         return;
@@ -100,30 +103,21 @@ namespace CLICalculator
             String input = System.Console.ReadLine();
             switch( input ) {
                 case "+":
-                    this.selectedOperation = 1;
+                    this.selectedOperation = Operations.ADDITION;
                     break;
                 case "-":
-                    this.selectedOperation = 2;
+                    this.selectedOperation = Operations.SUBTRACTION;
                     break;
                 case "*":
-                    this.selectedOperation = 3;
+                    this.selectedOperation = Operations.MULTIPLICATION;
                     break;
                 case "/":
-                    this.selectedOperation = 4;
+                    this.selectedOperation = Operations.DIVISION;
                     break;
                 default:
                     return false;
             }
             return true;
-        }
-
-        public void clearOperation() { this.selectedOperation = null; }
-
-
-
-        public void readInput()
-        {
-
         }
 
 

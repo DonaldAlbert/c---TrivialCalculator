@@ -25,4 +25,6 @@ namespace CLICalculator
             return a / b;
         }
     }
+
+    enum Operations { ADDITION, SUBTRACTION, MULTIPLICATION, DIVISION}
 }
